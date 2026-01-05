@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "PHORVIA",
+    "slug": "phorvia",
+    "privacy": "unlisted",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "orientation": "default",
+    "icon": "./assets/applogo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/applogo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/applogo.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}
