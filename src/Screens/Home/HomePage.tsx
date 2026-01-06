@@ -3,12 +3,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { allProductDetailsChanged, isLoadingChanged, productDataChanged } from '@utils/store';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { normalize } from '@utils/normaliseFont';
 import { getDetailsBySummaryIds, getSummaries } from '../../../services/appServices';
 
 
 type ClickOrder = Record<string, number>;
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const HomePage = ({ navigation }: any) => {
 
@@ -106,9 +108,17 @@ const HomePage = ({ navigation }: any) => {
             <TouchableOpacity style={styles.refreshButton} onPress={getProducts}>
               <Ionicons name="refresh-sharp" size={30} color="#fff" style={{ alignSelf: 'flex-end' }} />
             </TouchableOpacity>
-            <Text style={styles.title}>PHORVIA Products</Text>
+            {/* <Text style={styles.title}>PHORVIA Products</Text>
             <Text style={styles.subtitle}>Our Healthcare<Text style={styles.subtitleHighlight}> Products</Text>
-            </Text>
+            </Text> */}
+            <Image 
+              source={require('../../../assets/homeBanner.png')} 
+              style={{ 
+                width: screenWidth * 0.7, 
+                height: screenHeight * 0.1
+              }} 
+              resizeMode="contain"
+            />
             <FlatList
               data={productData}
               keyExtractor={(item) => item.id.toString()}
@@ -131,7 +141,7 @@ const HomePage = ({ navigation }: any) => {
               }}
             />
             {Object.keys(clickOrder).length > 0 && (
-              <View style={{ width: '100%', paddingVertical: 10, flexDirection: 'row', gap: 15 }}>
+              <View style={{ width: '49%', paddingVertical: 10, flexDirection: 'row', gap: 15, alignSelf: 'flex-end' }}>
                 <TouchableOpacity style={styles.clearButton} onPress={() => setClickOrder({})}>
                   <Text style={styles.clearButtonText}>Clear</Text>
                 </TouchableOpacity>
@@ -231,7 +241,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'medium',
-    fontSize: normalize(10),
+    fontSize: 16,
   },
   clearButton: {
     flex: 1,
@@ -247,7 +257,7 @@ const styles = StyleSheet.create({
     color: '#18a2d2',
     textAlign: 'center',
     fontFamily: 'medium',
-    fontSize: normalize(10),
+    fontSize: 16,
   },
   fullScreen: {
     ...StyleSheet.absoluteFillObject,

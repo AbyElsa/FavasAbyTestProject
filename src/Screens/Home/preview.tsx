@@ -6,7 +6,8 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
-    View
+    View,
+    StatusBar
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -86,72 +87,75 @@ const PreviewScreen = ({ route }: any) => {
     );
 
     return (
-        <LinearGradient colors={['#D0E4FF', '#ffffff', '#ffffff']} style={styles.container}>
-            <FlatList
-                ref={flatListRef}
-                key={listKey}
-                data={imagesArray}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item, idx) =>
-                    item?.id ? item.id.toString() : idx.toString()
-                }
-                onMomentumScrollEnd={e => {
-                    const index = Math.round(
-                        e.nativeEvent.contentOffset.x / width
-                    );
-                    setCurrentIndex(index);
-                }}
-                renderItem={({ item, index }) => (
-                    <ImageZoom
-                        ref={ref => (zoomRefs.current[index] = ref)}
-                        cropWidth={width}
-                        cropHeight={height}
-                        imageWidth={width}
-                        imageHeight={height}
-                        minScale={1}
-                        maxScale={3}
-                        enableDoubleClickZoom
-                    >
-                        <Image
-                            source={{ uri: item.imageUrl }}
-                            style={styles.image}
-                        />
-                    </ImageZoom>
-                )}
-            />
+        <>
+            <StatusBar hidden />
+            <LinearGradient colors={['#000', '#000']} style={styles.container}>
+                <FlatList
+                    ref={flatListRef}
+                    key={listKey}
+                    data={imagesArray}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item, idx) =>
+                        item?.id ? item.id.toString() : idx.toString()
+                    }
+                    onMomentumScrollEnd={e => {
+                        const index = Math.round(
+                            e.nativeEvent.contentOffset.x / width
+                        );
+                        setCurrentIndex(index);
+                    }}
+                    renderItem={({ item, index }) => (
+                        <ImageZoom
+                            ref={ref => (zoomRefs.current[index] = ref)}
+                            cropWidth={width}
+                            cropHeight={height}
+                            imageWidth={width}
+                            imageHeight={height}
+                            minScale={1}
+                            maxScale={3}
+                            enableDoubleClickZoom
+                        >
+                            <Image
+                                source={{ uri: item.imageUrl }}
+                                style={styles.image}
+                            />
+                        </ImageZoom>
+                    )}
+                />
 
-            {imagesArray.length > 1 && (
-                isLandscape ? (
-                    <View style={styles.landscapeNav}>
-                        <NavButton
-                            icon="chevron-back"
-                            onPress={goPrev}
-                            disabled={isPrevDisabled}
-                        />
-                        <NavButton
-                            icon="chevron-forward"
-                            onPress={goNext}
-                            disabled={isNextDisabled}
-                        />
-                    </View>
-                ) : (
-                    <View style={styles.portraitNav}>
-                        <NavButton
-                            icon="chevron-back"
-                            onPress={goPrev}
-                            disabled={isPrevDisabled}
-                        />
-                        <NavButton
-                            icon="chevron-forward"
-                            onPress={goNext}
-                            disabled={isNextDisabled}
-                        />
-                    </View>
-                )
-            )}
-        </LinearGradient>
+                {/* {imagesArray.length > 1 && (
+                    isLandscape ? (
+                        <View style={styles.landscapeNav}>
+                            <NavButton
+                                icon="chevron-back"
+                                onPress={goPrev}
+                                disabled={isPrevDisabled}
+                            />
+                            <NavButton
+                                icon="chevron-forward"
+                                onPress={goNext}
+                                disabled={isNextDisabled}
+                            />
+                        </View>
+                    ) : (
+                        <View style={styles.portraitNav}>
+                            <NavButton
+                                icon="chevron-back"
+                                onPress={goPrev}
+                                disabled={isPrevDisabled}
+                            />
+                            <NavButton
+                                icon="chevron-forward"
+                                onPress={goNext}
+                                disabled={isNextDisabled}
+                            />
+                        </View>
+                    )
+                )} */}
+            </LinearGradient>
+        </>
     );
 };
 
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
     image: {
         width,
         height,
-        resizeMode: 'contain'
+        resizeMode: 'cover'
     },
     navButton: {
         width: 52,
@@ -180,11 +184,11 @@ const styles = StyleSheet.create({
         right: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     portraitNav: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20
+        paddingHorizontal: 20,
     }
 });
